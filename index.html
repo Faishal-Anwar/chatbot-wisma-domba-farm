@@ -398,6 +398,7 @@
         const chatForm = document.getElementById('chat-form');
 
         const API_ENDPOINT = 'https://chatbot-wisma-domba-farm.vercel.app/api/ask';
+        const CLIENT_API_KEY = 'rahasia-wisma-2026'; // Ganti dengan key yang sama dengan di Vercel
 
         const promptMap = {
             'Profil Peternakan': 'Jelaskan profil lengkap Wisma Domba Farm dan keunggulannya',
@@ -467,7 +468,10 @@
 
                 const response = await fetch(API_ENDPOINT, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'X-Chatbot-Key': CLIENT_API_KEY
+                    },
                     body: JSON.stringify({ question: apiQuery }),
                     signal: controller.signal
                 });

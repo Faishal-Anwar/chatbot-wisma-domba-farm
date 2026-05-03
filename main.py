@@ -1,5 +1,6 @@
 import os
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Security, Depends
+from fastapi.security.api_key import API_KEY_HEADER, APIKeyHeader
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
@@ -10,6 +11,18 @@ from langchain_classic.chains import RetrievalQA
 
 # Load environment variables
 load_dotenv()
+
+# Security Configuration
+API_KEY_NAME = "X-Chatbot-Key"
+API_KEY = os.getenv("CHATBOT_API_KEY")
+api_key_header = APIKeyHeader(name=API_KEY_NAME, auto_error=False)
+
+async def get_api_key(header_value: str = Depends(api_key_header)):
+    if not API_KEY: # Jika API_KEY tidak diset di server, akses diizinkan (untuk testing)
+        return header_value
+    if header_value == API_KEY:
+        return header_value
+    raise HTTPException(status_code=403, detail="Akses ditolak: API Key tidak valid")
 
 app = FastAPI()
 
@@ -75,7 +88,7 @@ def read_root():
     return {"message": "Wisma Domba Farm RAG API (Pinecone) is running"}
 
 @app.post("/api/ask")
-async def ask_question(request: QuestionRequest):
+async def ask_question(request: QuestionRequest, api_key: str = Depends(get_api_key)):
     chain = get_qa_chain()
     if chain is None:
         raise HTTPException(
