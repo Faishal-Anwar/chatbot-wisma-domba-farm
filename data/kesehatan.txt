@@ -1,0 +1,17 @@
+Di Wisma Domba Farm, kesehatan adalah prioritas utama. Kami menerapkan standar ketat:
+
+SOP Kesehatan:
+1. Vaksinasi: Rutin setiap 6 bulan sekali (PMK, Orf).
+2. Pemberian Obat Cacing: Setiap 3 bulan sekali.
+3. Cek Bobot: Dilakukan 2 minggu sekali untuk memantau Average Daily Gain (ADG).
+4. Kebersihan Kandang: Pembersihan kotoran setiap pagi dan penyemprotan desinfektan 2 kali seminggu.
+
+Contoh Rekam Medis (ID: WD-001):
+- Jenis: Garut Super.
+- Tanggal Lahir: 12 Januari 2024.
+- Bobot Terakhir: 45 kg (Update: 1 Mei 2026).
+- Status: Sehat.
+- Riwayat: Vaksinasi PMK (Maret 2026).
+
+Pakan:
+Kami menggunakan kombinasi Pakan Komplet (Complete Feed) yang terdiri dari rumput odot, jagung giling, bungkil kedelai, dan mineral mix untuk memastikan pertumbuhan optimal.

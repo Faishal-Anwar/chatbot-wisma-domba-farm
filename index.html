@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wisma Domba Farm - AI Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            /* Farm & Nature Color Palette */
+            --forest-900: #132a13;
+            --forest-800: #1b4332;
+            --forest-700: #2d6a4f;
+            --forest-600: #40916c;
+            --earth-gold: #d4a373;
+            --earth-light: #faedcd;
+            --bg-cream: #fefae0;
+            --bg-white: #ffffff;
+            
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-soft: #e2e8f0;
+            
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --radius-lg: 24px;
+            --radius-xl: 32px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, var(--bg-cream) 0%, #e9edc9 100%);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        #app-container {
+            width: 95%;
+            max-width: 900px;
+            height: 92vh;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: var(--radius-xl);
+            display: flex;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+
+        #chat-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-white);
+            position: relative;
+        }
+
+        .chat-header {
+            padding: 16px 32px;
+            border-bottom: 1px solid var(--border-soft);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .brand-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-logo {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--forest-700), var(--forest-900));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-meta h2 { font-size: 1.1rem; color: var(--forest-900); font-weight: 800; }
+        .header-meta p { font-size: 0.75rem; color: var(--forest-600); font-weight: 600; display: flex; align-items: center; gap: 6px; }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .btn-clear-chat {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+        .btn-clear-chat:hover { color: #ef4444; background: #fef2f2; }
+
+        #message-area {
+            flex: 1;
+            padding: 32px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            scroll-behavior: smooth;
+        }
+
+        #message-area::-webkit-scrollbar { width: 5px; }
+        #message-area::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        .message-wrapper {
+            display: flex;
+            flex-direction: column;
+            max-width: 85%;
+            animation: slideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .wrapper-user { align-self: flex-end; align-items: flex-end; }
+        .wrapper-ai { align-self: flex-start; align-items: flex-start; }
+
+        .bubble {
+            padding: 14px 20px;
+            font-size: 1rem;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .bubble-user {
+            background: linear-gradient(135deg, var(--forest-700), var(--forest-800));
+            color: white;
+            border-radius: 20px 20px 4px 20px;
+            box-shadow: 0 6px 15px -4px rgba(27, 67, 50, 0.3);
+        }
+
+        .bubble-ai {
+            background: var(--bg-cream);
+            color: var(--text-main);
+            border-radius: 20px 20px 20px 4px;
+            border: 1px solid #e9edc9;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .msg-time {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 600;
+        }
+
+        /* QUICK HELP BLOCK */
+        .quick-help-block {
+            align-self: flex-end;
+            width: 100%;
+            max-width: 450px;
+            margin-top: 10px;
+            border: 1.5px solid var(--forest-600);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            animation: slideUp 0.5s ease-out;
+        }
+
+        /* Navbar inside quick help - Merged and Simplified */
+        .help-navbar {
+            background: var(--forest-800);
+            padding: 12px 16px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Centered for cleaner look */
+        }
+        .help-navbar h4 { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* ACTION CHIPS - GRID */
+        .action-chips-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0;
+            background: white;
+        }
+
+        .chip-user {
+            background: white;
+            border: 0.5px solid rgba(64, 145, 108, 0.1);
+            color: var(--forest-700);
+            padding: 14px 16px;
+            border-radius: 0;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 12px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .chip-user:hover {
+            background: var(--forest-700);
+            color: white;
+        }
+
+        .chip-user i { 
+            font-style: normal; 
+            font-size: 1.1rem;
+            min-width: 24px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Typing Indicator */
+        #typing-box {
+            display: none;
+            align-self: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .typing-indicator {
+            background: var(--bg-cream);
+            padding: 12px 20px;
+            border-radius: 20px 20px 20px 4px;
+            display: flex;
+            gap: 5px;
+            border: 1px solid #e9edc9;
+        }
+
+        .dot { width: 7px; height: 7px; background: var(--forest-600); border-radius: 50%; animation: bounce 1.4s infinite ease-in-out both; }
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+        /* Input Area */
+        .input-wrapper {
+            padding: 20px 32px 32px;
+            background: white;
+            border-top: 1px solid var(--border-soft);
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 6px 10px;
+            transition: all 0.3s;
+        }
+
+        .input-container:focus-within {
+            border-color: var(--forest-600);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(64, 145, 108, 0.1);
+        }
+
+        #msg-input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            padding: 10px 14px;
+            font-family: inherit;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .btn-send {
+            background: var(--forest-800);
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .btn-send:hover:not(:disabled) { background: var(--forest-600); transform: scale(1.05); }
+        .btn-send:disabled { background: #cbd5e1; cursor: not-allowed; }
+        .btn-send svg { width: 18px; height: 18px; fill: white; }
+
+        @media (max-width: 600px) {
+            #app-container { width: 100%; height: 100vh; border-radius: 0; }
+            #message-area { padding: 20px; }
+            .input-wrapper { padding: 10px 20px 20px; }
+            .action-chips-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app-container">
+        <main id="chat-section">
+            <header class="chat-header">
+                <div class="brand-info">
+                    <div class="header-logo">🐑</div>
+                    <div class="header-meta">
+                        <h2>Wisma Domba Farm</h2>
+                        <p><span class="status-dot"></span> Sistem Online</p>
+                    </div>
+                </div>
+                <button class="btn-clear-chat" onclick="clearChat()">Hapus Riwayat</button>
+            </header>
+
+            <div id="message-area">
+                <!-- Welcome -->
+                <div class="message-wrapper wrapper-ai">
+                    <div class="bubble bubble-ai">
+                        <h3>Selamat datang! 🌾</h3>
+                        <p>Saya asisten digital <b>Wisma Domba Farm</b>. Apa yang ingin Anda ketahui hari ini?</p>
+                    </div>
+                    <div class="msg-time">Sekarang</div>
+                </div>
+
+                <!-- SIMPLIFIED QUICK HELP SECTION -->
+                <div class="quick-help-block" id="initial-help">
+                    <nav class="help-navbar">
+                        <h4>Pilih Menu Informasi</h4>
+                    </nav>
+                    <div class="action-chips-container">
+                        <button class="chip-user" onclick="fastAsk('Profil Peternakan')"><i>🏢</i> Profil Farm</button>
+                        <button class="chip-user" onclick="fastAsk('Katalog Domba')"><i>🐑</i> Katalog Domba</button>
+                        <button class="chip-user" onclick="fastAsk('Program Investasi')"><i>📈</i> Investasi</button>
+                        <button class="chip-user" onclick="fastAsk('Cek Kesehatan Domba')"><i>🩺</i> Cek Kesehatan</button>
+                        <button class="chip-user" onclick="fastAsk('Stok Pakan')"><i>🌾</i> Stok Pakan</button>
+                        <button class="chip-user" onclick="fastAsk('Perbandingan Ras')"><i>🏆</i> Komparasi Ras</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="typing-box">
+                <div class="typing-indicator">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+
+            <div class="input-wrapper">
+                <form id="chat-form">
+                    <div class="input-container">
+                        <input type="text" id="msg-input" placeholder="Tulis pertanyaan Anda..." autocomplete="off">
+                        <button type="submit" class="btn-send" id="send-trigger">
+                            <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const chatFeed = document.getElementById('message-area');
+        const msgInput = document.getElementById('msg-input');
+        const sendBtn = document.getElementById('send-trigger');
+        const typingBox = document.getElementById('typing-box');
+        const chatForm = document.getElementById('chat-form');
+
+        const API_ENDPOINT = 'http://127.0.0.1:8000/api/ask';
+
+        const promptMap = {
+            'Profil Peternakan': 'Jelaskan profil lengkap Wisma Domba Farm dan keunggulannya',
+            'Katalog Domba': 'Tampilkan stok domba WD-Garut yang tersedia saat ini',
+            'Program Investasi': 'Bagaimana perhitungan bagi hasil investasi fattening?',
+            'Cek Kesehatan Domba': 'Tampilkan rekam medis domba dengan tag WD-001',
+            'Stok Pakan': 'Berapa sisa stok pakan konsentrat saat ini?',
+            'Perbandingan Ras': 'Ceritakan keunggulan ras Dorper dibandingkan Merino'
+        };
+
+        function getCurrentTime() {
+            const now = new Date();
+            return now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+        }
+
+        function createBubble(content, isUser) {
+            const wrapper = document.createElement('div');
+            wrapper.className = `message-wrapper ${isUser ? 'wrapper-user' : 'wrapper-ai'}`;
+            
+            const bubble = document.createElement('div');
+            bubble.className = `bubble ${isUser ? 'bubble-user' : 'bubble-ai'}`;
+            
+            if (isUser) {
+                bubble.textContent = content;
+            } else {
+                if (window.marked) {
+                    try { bubble.innerHTML = marked.parse(content); }
+                    catch (e) { bubble.innerHTML = content.replace(/\n/g, '<br>'); }
+                } else {
+                    bubble.innerHTML = content.replace(/\n/g, '<br>');
+                }
+            }
+
+            wrapper.appendChild(bubble);
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'msg-time';
+            timeDiv.textContent = getCurrentTime();
+            wrapper.appendChild(timeDiv);
+
+            chatFeed.appendChild(wrapper);
+            chatFeed.scrollTo({ top: chatFeed.scrollHeight, behavior: 'smooth' });
+        }
+
+        async function processChat(event, predefinedText) {
+            if (event) event.preventDefault();
+
+            let query = predefinedText || msgInput.value.trim();
+            if (!query) return;
+
+            const initialHelp = document.getElementById('initial-help');
+            if (initialHelp) initialHelp.remove();
+
+            let apiQuery = promptMap[query] || query;
+
+            if (!predefinedText) msgInput.value = '';
+
+            createBubble(query, true);
+
+            typingBox.style.display = 'flex';
+            chatFeed.appendChild(typingBox);
+            chatFeed.scrollTo({ top: chatFeed.scrollHeight, behavior: 'smooth' });
+            sendBtn.disabled = true;
+
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 60000);
+
+                const response = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question: apiQuery }),
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+
+                const result = await response.json();
+                typingBox.style.display = 'none';
+
+                if (response.ok) {
+                    createBubble(result.answer || "Output Kosong", false);
+                } else {
+                    createBubble("❌ <b>Kesalahan:</b> " + (result.detail || "Error"), false);
+                }
+            } catch (err) {
+                typingBox.style.display = 'none';
+                createBubble("⚠️ Gagal terhubung ke server.", false);
+            } finally {
+                sendBtn.disabled = false;
+                msgInput.focus();
+            }
+        }
+
+        function fastAsk(q) {
+            processChat(null, q);
+        }
+
+        function clearChat() {
+            location.reload();
+        }
+
+        chatForm.addEventListener('submit', (e) => processChat(e));
+    </script>
+</body>
+</html>

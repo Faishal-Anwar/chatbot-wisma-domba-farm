@@ -1,0 +1,17 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+
+# Database & Local Vector Stores
+vector_db/
+chroma_db/
+
+# Environment Variables (SANGAT PENTING)
+.env
+
+# OS Files
+.DS_Store
+Thumbs.db
