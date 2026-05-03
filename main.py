@@ -1,6 +1,6 @@
 import os
 from fastapi import FastAPI, HTTPException, Security, Depends
-from fastapi.security.api_key import API_KEY_HEADER, APIKeyHeader
+from fastapi.security.api_key import APIKeyHeader
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
