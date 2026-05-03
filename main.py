@@ -72,13 +72,13 @@ _qa_chain = None
 
 def get_qa_chain():
     global _qa_chain
-    if _qa_chain is None:
-        _qa_chain = setup_rag()
-    return _qa_chain
-
-@app.on_event("startup")
-async def startup_event():
-    get_qa_chain()
+    try:
+        if _qa_chain is None:
+            _qa_chain = setup_rag()
+        return _qa_chain
+    except Exception as e:
+        print(f"FAILED TO INITIALIZE RAG: {e}")
+        return None
 
 class QuestionRequest(BaseModel):
     question: str
@@ -93,7 +93,7 @@ async def ask_question(request: QuestionRequest, api_key: str = Depends(get_api_
     if chain is None:
         raise HTTPException(
             status_code=500, 
-            detail="RAG system not initialized. Check your Pinecone and Google API keys."
+            detail="RAG system not initialized. Check server logs for details."
         )
     
     try:
