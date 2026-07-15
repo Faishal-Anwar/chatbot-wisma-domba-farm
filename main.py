@@ -109,6 +109,9 @@ from sync_service import run_sync
 security = HTTPBearer(auto_error=False)
 
 @app.get("/api/cron/sync")
+@app.post("/api/cron/sync")
+@app.post("/api/webhook/sync")
+@app.get("/api/webhook/sync")
 async def cron_sync_db(credentials: HTTPAuthorizationCredentials = Depends(security), api_key: str = Depends(api_key_header)):
     cron_secret = os.getenv("CRON_SECRET")
     is_cron_authorized = cron_secret and credentials and credentials.credentials == cron_secret
