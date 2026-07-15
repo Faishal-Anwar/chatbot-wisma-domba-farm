@@ -1,5 +1,5 @@
 import os
-import psycopg2
+import pg8000.dbapi
 from dotenv import load_dotenv
 from langchain_core.documents import Document
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
@@ -24,9 +24,9 @@ def get_static_documents():
 def fetch_db_documents():
     docs = []
     try:
-        conn = psycopg2.connect(
+        conn = pg8000.dbapi.connect(
             host=os.getenv("DB_HOST"),
-            port=os.getenv("DB_PORT", "6543"),
+            port=int(os.getenv("DB_PORT", "6543")),
             database=os.getenv("DB_DATABASE"),
             user=os.getenv("DB_USERNAME"),
             password=os.getenv("DB_PASSWORD")
