@@ -11,3 +11,4 @@ langchain-classic
 pydantic
 pydantic-settings
 requests
+psycopg2-binary

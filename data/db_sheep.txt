@@ -1,0 +1,18 @@
+Data Inventaris Domba di Wisma Domba Farm:
+
+Domba Jantan dengan tag QR-013 (jenis Suffolk Super) saat ini berumur 9 Bulan, memiliki bobot 58.00 kg, dalam kondisi Sehat, dan berstatus Terjual dengan harga Rp 110000/kg.
+Domba Jantan dengan tag QR-001 (jenis Cross Texel) saat ini berumur 8 Bulan, memiliki bobot 45.50 kg, dalam kondisi Sehat, dan berstatus Terjual dengan harga Rp 85000/kg.
+Domba Jantan dengan tag QR-010 (jenis Garut Aduan) saat ini berumur 11 Bulan, memiliki bobot 52.50 kg, dalam kondisi Sehat, dan berstatus Terjual dengan harga Rp 120000/kg.
+Domba Jantan dengan tag QR-011 (jenis East Friesian Milk) saat ini berumur 1 Bulan, memiliki bobot 12.50 kg, dalam kondisi Sehat, dan berstatus Terjual dengan harga harga belum ditentukan.
+Domba Betina dengan tag QR-015 (jenis Awassi Crossbreed) saat ini berumur 16 Bulan, memiliki bobot 40.20 kg, dalam kondisi Sehat, dan berstatus Hamil dengan harga harga belum ditentukan.
+Domba Jantan dengan tag QR-004 (jenis Garut Tangkas) saat ini berumur 7 Bulan, memiliki bobot 38.00 kg, dalam kondisi Demam / PMK Gejala Awal, dan berstatus Sakit dengan harga harga belum ditentukan.
+Domba Jantan dengan tag QR-005 (jenis Merino Pedaging) saat ini berumur 10 Bulan, memiliki bobot 55.00 kg, dalam kondisi Sehat, dan berstatus Siap Jual dengan harga Rp 95000/kg.
+Domba Betina dengan tag QR-006 (jenis Cross Texel Indukan) saat ini berumur 12 Bulan, memiliki bobot 42.00 kg, dalam kondisi Sehat, dan berstatus Hamil dengan harga harga belum ditentukan.
+Domba Betina dengan tag QR-007 (jenis Lokal Super) saat ini berumur 4 Bulan, memiliki bobot 30.50 kg, dalam kondisi Sehat, dan berstatus Penggemukan dengan harga Rp 75000/kg.
+Domba Jantan dengan tag QR-008 (jenis Dorper Fullblood) saat ini berumur 14 Bulan, memiliki bobot 65.20 kg, dalam kondisi Sehat, dan berstatus Siap Jual dengan harga Rp 150000/kg.
+Domba Betina dengan tag QR-009 (jenis Awassi Dairy) saat ini berumur 18 Bulan, memiliki bobot 48.00 kg, dalam kondisi Sehat, dan berstatus Hamil dengan harga harga belum ditentukan.
+Domba Jantan dengan tag TSTS-30 (jenis F1 Texel) saat ini berumur Baru, memiliki bobot 100.00 kg, dalam kondisi Sehat, dan berstatus Siap Jual dengan harga Rp 100000000/kg.
+Domba Jantan dengan tag QR-002 (jenis F1 Texel) saat ini berumur 5 Bulan, memiliki bobot 32.00 kg, dalam kondisi Sehat, dan berstatus Penggemukan dengan harga Rp 90000/kg.
+Domba Betina dengan tag QR-003 (jenis F2 Suffolk) saat ini berumur 2 Bulan, memiliki bobot 15.20 kg, dalam kondisi Sehat, dan berstatus Anakan dengan harga harga belum ditentukan.
+Domba Betina dengan tag QR-012 (jenis Merino Wool Grade) saat ini berumur 6 Bulan, memiliki bobot 49.80 kg, dalam kondisi Kudis Ringan, dan berstatus Penggemukan dengan harga Rp 80000/kg.
+Domba Betina dengan tag QR-014 (jenis Dorper Cross) saat ini berumur 3 Bulan, memiliki bobot 22.40 kg, dalam kondisi Sehat, dan berstatus Penggemukan dengan harga harga belum ditentukan.

@@ -49,6 +49,15 @@ def ingest_data():
         task_type="retrieval_document"
     )
 
+    # Clear existing vectors to prevent duplicates
+    print(f"Clearing existing vectors in index: {INDEX_NAME}...")
+    index = pc.Index(INDEX_NAME)
+    try:
+        index.delete(delete_all=True)
+        print("Existing vectors cleared.")
+    except Exception as e:
+        print(f"Could not clear vectors (might be empty): {e}")
+
     # Ingest to Pinecone
     print(f"Ingesting {len(documents)} documents to Pinecone...")
     PineconeVectorStore.from_documents(

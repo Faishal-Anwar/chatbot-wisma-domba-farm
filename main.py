@@ -1,6 +1,7 @@
 import os
-from fastapi import FastAPI, HTTPException, Security, Depends
+from fastapi import FastAPI, HTTPException, Security, Depends, Request
 from fastapi.security.api_key import APIKeyHeader
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
@@ -102,6 +103,25 @@ async def ask_question(request: QuestionRequest, api_key: str = Depends(get_api_
     except Exception as e:
         print(f"Error processing question: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+from sync_service import run_sync
+
+security = HTTPBearer(auto_error=False)
+
+@app.get("/api/cron/sync")
+async def cron_sync_db(credentials: HTTPAuthorizationCredentials = Depends(security), api_key: str = Depends(api_key_header)):
+    cron_secret = os.getenv("CRON_SECRET")
+    is_cron_authorized = cron_secret and credentials and credentials.credentials == cron_secret
+    is_api_authorized = API_KEY and api_key == API_KEY
+    
+    if not (is_cron_authorized or is_api_authorized or not API_KEY):
+        raise HTTPException(status_code=401, detail="Unauthorized")
+
+    result = run_sync()
+    if result.get("success"):
+        return {"status": "success", "message": result["message"]}
+    else:
+        raise HTTPException(status_code=500, detail=result.get("message", "Unknown error"))
 
 if __name__ == "__main__":
     import uvicorn

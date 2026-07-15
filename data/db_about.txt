@@ -1,0 +1,18 @@
+Informasi Profil dan Layanan Wisma Domba Farm:
+
+== Nilai Inti Kami ==
+Prinsip yang menggerakkan setiap inovasi di WisDom+.
+Detail:
+- {'icon': 'ShieldCheck', 'title': 'Integritas Genetik', 'desc': 'Setiap bibit yang kami hasilkan memiliki sertifikasi silsilah yang jelas dan terverifikasi.'}
+- {'icon': 'Target', 'title': 'Presisi Nutrisi', 'desc': 'Optimasi pakan berbasis limbah organik yang difermentasi untuk performa pertumbuhan maksimal.'}
+- {'icon': 'Award', 'title': 'Kesejahteraan Ternak', 'desc': 'Manajemen kandang modern yang mengutamakan kenyamanan dan kesehatan alami domba.'}
+
+== Tentang kami ==
+Revolusi peternakan domba berawal dari kepedulian lingkungan dan keunggulan teknologi genetik.
+
+== Selayang Pandang Peternakan Kami ==
+Kami percaya bahwa masa depan ketahanan pangan dimulai dari data yang presisi dan nutrisi yang berkelanjutan.
+Detail:
+- description: Didirikan pada tahun 2024 di Indramayu, WisDom+ hadir untuk memecahkan masalah klasik peternakan konvensional. Dengan mengintegrasikan sistem Cloud Identity, kami memastikan setiap ekor domba memiliki rekam medis digital yang transparan.
+- stats: [{'label': 'Farm Terbaik', 'value': 'No. 1'}, {'label': 'Populasi Domba', 'value': '500+'}]
+
