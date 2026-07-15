@@ -52,3 +52,4 @@ Buka file `index.html` di browser Anda. Pastikan server backend sedang berjalan 
 - `index.html`: UI Chatbot.
 - `vector_db/`: Folder database vektor (otomatis dibuat saat dijalankan).
 - `venv/`: Virtual environment.
+ 
